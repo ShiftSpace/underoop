@@ -1,0 +1,56 @@
+h1. Datatype Mixin for Underscore.js
+
+Initializing class-like things in JavaScript is a big pain. Also writing your objects in the following manner is also tedious:
+
+<pre>
+var MyClass = function() {
+    this.foo = "foo";
+    this.bar = "bar";
+};
+
+MyClass.prototype.baz = function() {
+    ...
+}
+
+MyClass.prototype.woz = function() {
+    ...
+}
+</pre>
+
+Using datatype.js you can instead write the following:
+
+<pre>
+var MyClass = _.datatype({
+    initialize: function() {
+       this.foo = "foo";
+       this.bar = "bar";
+    },
+
+    baz: function () {
+    },
+
+    woz: function() {
+    }
+});
+</pre>
+
+datatype.js doesn't support datatype inheritance of any kind. However it is sometimes useful to reuse a name. For this purpose there is <code>_.multi</code>. You can use this like so:
+
+<pre>
+var Foo = _.datatype({});
+var Bar = _.datatype({});
+
+_.multi("cool", Foo, function(x) {
+  console.log("got type Foo!");
+});
+
+_.multi("cool", Foobar, function(x) {
+  console.log("got type Bar!");
+});
+
+var a = new Foo();
+var b = new Bar();
+
+_.cool(a);
+_.cool(b);
+</pre>
