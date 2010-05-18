@@ -1,6 +1,6 @@
 h1. Datatype Mixin for Underscore.js
 
-Initializing class-like things in JavaScript is a big pain. Also writing your objects in the following manner is also tedious:
+Often you want class like things but writing your objects in the following manner is kind of tedious:
 
 <pre>
 var MyClass = function() {
