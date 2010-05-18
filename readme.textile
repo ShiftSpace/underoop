@@ -1,4 +1,6 @@
-h1. Datatype Mixin for Underscore.js
+h1. Introduction to datatype.js
+
+h2. Defining new types
 
 Often you want class like things but writing your objects in the following manner is kind of tedious:
 
@@ -34,18 +36,44 @@ var MyClass = _.datatype({
 });
 </pre>
 
+h2. Protocols
+
+Often you'll have a chunk of functionality that does not belong to a particular class. You can define a set of methods like so:
+
+<pre>
+var Events = _.protocol({
+    addEvent: function(type, fn) { ... },
+    removeEvent: function(type, fn) { ... },
+    removeEvents: function(type) { ... },
+    fireEvent: function(type) { ... }
+});
+</pre>
+
+And "mixin" in this functionality easily:
+
+<pre>
+var Foo = _.datatype({
+    protocols: [Events],
+    intialize: function () {
+        ...      
+    } 
+});
+</pre>
+
+h2. Polymorphism
+
 datatype.js doesn't support datatype inheritance of any kind. However it is sometimes useful to reuse a name. For this purpose there is <code>_.multi</code>. You can use this like so:
 
 <pre>
-var Foo = _.datatype({});
-var Bar = _.datatype({});
+var Foo = _.datatype();
+var Bar = _.datatype();
 
 _.multi("cool", Foo, function(x) {
-  console.log("got type Foo!");
+    console.log("got type Foo!");
 });
 
-_.multi("cool", Foobar, function(x) {
-  console.log("got type Bar!");
+_.multi("cool", Bar, function(x) {
+    console.log("got type Bar!");
 });
 
 var a = new Foo();
@@ -53,4 +81,10 @@ var b = new Bar();
 
 _.cool(a);
 _.cool(b);
+</pre>
+
+With the above code the following also works great:
+
+<pre>
+_([a, b]).map(_.cool);
 </pre>
