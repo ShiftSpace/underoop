@@ -29,6 +29,7 @@ _.mixin({
   },
   
   datatype: function(obj) {
+    obj = obj || {};
     var klass = function() {
       if(_.isFunction(this.initialize)) {
         return this.initialize.apply(this, arguments);
@@ -36,7 +37,7 @@ _.mixin({
         return this;
       }
     };
-    var protocols = obj.protcols || [];
+    var protocols = obj.protocols || [];
     var name = obj.name = (obj.name || _.uniqueId("UnnamedType"));
     var methodMap = protocols
       .map(function(x) { x = _(x).clone(); delete x.name; delete x.toString; return x; });
