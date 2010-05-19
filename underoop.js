@@ -28,12 +28,12 @@
     },
 
     // check if an instance derives from class
-    memberof: function(x, _class) {
+    isMember: function(x, _class) {
       return x instanceof _class;
     },
 
     // check if the instance has the same class
-    instanceof: function(x, _class) {
+    isInstance: function(x, _class) {
       return x._class = _class;
     },
 
@@ -64,10 +64,10 @@
         }
       });
 
-      klass.name = name;
+      klass._name = name;
       klass.prototype = new Class();
-      klass.prototype.type = klass;
-      klass.prototype.modules = klass.modules = modules;
+      klass.prototype._class = klass;
+      klass.prototype._modules = klass._modules = modules;
 
       _(obj).each(function(v, k) {
         klass.prototype[k] = v;
