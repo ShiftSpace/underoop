@@ -74,7 +74,7 @@ var Foo = _.Class({
     this.z = z;
   },
   add: function(x, y) {
-    return [x, y].join("");
+    return [x, y, this.z].join("");
   }
 });
 var Bar = _.Class({
@@ -82,7 +82,7 @@ var Bar = _.Class({
     this.z = z;
   },
   add: function(x, y) {
-    return x + y + thiz.z;
+    return x + y + this.z;
   }
 });
 
