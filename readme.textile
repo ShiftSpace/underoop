@@ -60,7 +60,7 @@ var Foo = _.Type({
 });
 </pre>
 
-h2. Polymorphism
+h2. Messaging
 
 Being able to package up a message is pretty useful, especially at cutting down the amount of typing that you have to do. All methods of a Type are added to <code>_sel</code> so you use them with Underscore's excellent interfaces to the JavaScript collections.
 
