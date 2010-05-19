@@ -1,26 +1,14 @@
 (function() {
 
-  var multiMap = {};
+  var root = this;
+  root._sel = {};
+
   function Type() {};
   function Protocol() {};
   
   _.mixin({
     extenderOf: function(x, protocol) {
       return _(x.protocols).indexOf(protocol) != -1;
-    },
-
-    Multi: function(name, type, fn) {
-      if(_.isUndefined(multiMap[name])) {
-        var dispatchTable = {},
-            dispatcher = {};
-        multiMap[name] = dispatchTable;
-        dispatcher[name] = function(instance) {
-          var rest = _.rest(arguments);
-          return multiMap[name][instance.name].apply(instance, rest);
-        };
-        _.mixin(dispatcher);
-      }
-      multiMap[name][type.name] = fn;
     },
 
     isProtocol: function() {
@@ -65,9 +53,25 @@
       klass.prototype = new Type();
       klass.prototype.type = klass;
       klass.prototype.protocols = klass.protocols = protocols;
+
       _(obj).each(function(v, k) {
         klass.prototype[k] = v;
+        if(_.isUndefined(_sel[k])) {
+          _sel[k] = function() {
+            var args = arguments;
+            return function(x) {
+              var result;
+              try{
+                result = x[k].apply(x, args);                
+              } catch (err) {
+                throw Error([x.name, "does not implement", k, "or signature does not match"].join(" "));
+              }
+              return result;
+            };
+          };
+        }
       });
+
       return klass;
     }
   });

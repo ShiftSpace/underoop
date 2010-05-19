@@ -22,7 +22,7 @@ MyClass.prototype.woz = function() {
 Using datatype.js you can instead write the following:
 
 <pre>
-var MyClass = _.datatype({
+var MyClass = _.Type({
     initialize: function() {
        this.foo = "foo";
        this.bar = "bar";
@@ -41,7 +41,7 @@ h2. Protocols
 Often you'll have a chunk of functionality that does not belong to a particular class. You can define a set of methods like so:
 
 <pre>
-var Events = _.protocol({
+var Events = _.Protocol({
     addEvent: function(type, fn) { ... },
     removeEvent: function(type, fn) { ... },
     removeEvents: function(type) { ... },
@@ -52,7 +52,7 @@ var Events = _.protocol({
 And "mixin" in this functionality easily:
 
 <pre>
-var Foo = _.datatype({
+var Foo = _.Type({
     protocols: [Events],
     intialize: function () {
         ...      
@@ -62,29 +62,28 @@ var Foo = _.datatype({
 
 h2. Polymorphism
 
-datatype.js doesn't support datatype inheritance of any kind. However it is sometimes useful to reuse a name. For this purpose there is <code>_.multi</code>. You can use this like so:
+Being able to package up a message is pretty useful, especially at cutting down the amount of typing that you have to do. All methods of a Type are added to <code>_sel</code> so you use them with Underscore's excellent interfaces to the JavaScript collections.
 
 <pre>
-var Foo = _.datatype();
-var Bar = _.datatype();
-
-_.multi("cool", Foo, function(x) {
-    console.log("got type Foo!");
+var Foo = _.Type({
+  initialize: function(z) {
+    this.z = z;
+  },
+  add: function(x, y) {
+    return [x, y].join("");
+  }
+});
+var Bar = _.Type({
+  initialize: function(z) {
+    this.z = z;
+  },
+  add: function(x, y) {
+    return x + y + thiz.z;
+  }
 });
 
-_.multi("cool", Bar, function(x) {
-    console.log("got type Bar!");
-});
+var a = new Foo("cool!");
+var b = new Bar(6);
 
-var a = new Foo();
-var b = new Bar();
-
-_.cool(a);
-_.cool(b);
-</pre>
-
-With the above code the following also works great:
-
-<pre>
-_([a, b]).map(_.cool);
+_([a, b]).map(_sel.add(4, 5));
 </pre>
