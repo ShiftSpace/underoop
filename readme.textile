@@ -54,7 +54,7 @@ var Events = _.Module({
 And "mixin" in this functionality easily:
 
 <pre>
-var Foo = _.Module({
+var Foo = _.Class({
     includes: [Events],
     intialize: function () {
         ...      
