@@ -1,10 +1,10 @@
 h1. Introduction to Underoop.js
 
-Underoop.js is a Underscore.js mixin that adds some handy functions for OOP style development. This style of development is particulary useful when bulding extensible loosely coupled components that are consistently and logically structures around some data. I also wanted to create somethig that would work well with Underscore's functional operations on JavaScript Objects and Arrays.
+Underoop.js is a Underscore.js mixin that adds some handy functions for OOP style development. This style of development is particulary useful when bulding extensible, loosely coupled components that are consistently and logically structured around some data. I also wanted to create a set of extensions that integrate well with Underscore's handy functional operations on JavaScript Objects and Arrays.
 
 h2. Defining new Classes
 
-Often you want OOP class-like things but writing your objects in the following manner is kind of tedious:
+Often you want OOP class-like things but writing your objects in the following manner is tedious:
 
 <pre>
 var MyClass = function() {
@@ -62,11 +62,11 @@ var Foo = _.Class({
 });
 </pre>
 
-This is similar to how Ruby deals with this.
+Rubyists will find this familiar.
 
 h2. Messaging
 
-Being able to package up a message is pretty useful, especially at cutting down the amount of typing that you have to do. All methods of a Class are added to <code>_sel</code> so you use them with Underscore's excellent interfaces to the JavaScript collections.
+Selectors are pretty useful, especially at cutting down the amount of typing. All methods of a Class are added as helper functins to an object <code>_sel</code> so you use them with Underscore's excellent interfaces to the JavaScript collections.
 
 <pre>
 var Foo = _.Class({
@@ -92,11 +92,13 @@ var b = new Bar(6);
 _([a, b]).map(_sel.add(4, 5));
 </pre>
 
+Take note that for any method <code>foo</code> you will need to write <code>_sel.foo()</code> even if it takes no arguments.
+
 h2. Inheritance
 
-Underoop does not support inheritance. Inheritance breaks miserably under AJAX request without a lot of ugly hacks. I've come to the conclusion that inheritance is a bug. Use Modules.
+Underoop does not support inheritance. Inheritance breaks miserably under AJAX requests without a lot of ugly hacks. After many years of OOP I've come to the conclusion that inheritance is a bug. Clojurians and Haskellers agree. Use Modules. 
 
 h2. Caveats
 
-Name clashes are always a concern between Class method names, Class instance vars, Module method names, and Module instance vars. Underoop can't solve these problems for you without adding a lot of incidental complexity for and myself. However JavaScript private scope, lookup tables, and Underscore's excellent <code>_.unqiueId</code> can work wonders ;)
+Name clashes are always a concern between Class method names, Class instance vars, Module method names, and Module instance vars. Underoop can't solve these problems without adding a lot of incidental complexity for you and myself. However JavaScript private scope, lookup tables, and Underscore's excellent <code>_.unqiueId</code> can work wonders for your particular usecase ;)
 
