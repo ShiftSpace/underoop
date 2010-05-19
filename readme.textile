@@ -1,8 +1,10 @@
 h1. Introduction to Underoop.js
 
-h2. Defining new types
+Underoop.js is a Underscore.js mixin that adds some handy functions for OOP style development. This style of development is particulary useful when bulding extensible loosely coupled components that are consistently and logically structures around some data. I also wanted to create somethig that would work well with Underscore's functional operations on JavaScript Objects and Arrays.
 
-Often you want class like things but writing your objects in the following manner is kind of tedious:
+h2. Defining new Classes
+
+Often you want OOP lass-like things but writing your objects in the following manner is kind of tedious:
 
 <pre>
 var MyClass = function() {
@@ -36,7 +38,7 @@ var MyClass = _.Class({
 });
 </pre>
 
-h2. Modules
+h2. Defining Modules
 
 Often you'll have a chunk of functionality that does not belong to a particular class. You can define a set of methods like so:
 
@@ -91,4 +93,10 @@ _([a, b]).map(_sel.add(4, 5));
 </pre>
 
 h2. Inheritance
+
+Underoop does not support inheritance. Inheritance breaks miserably under AJAX request without a lot of ugly hacks. I've come to the conclusion that inheritance is a bug. Use Modules.
+
+h2. Caveats
+
+Name clashes are always a concern between Class method names, Class instance vars, Module method names, and Module instance vars. Underoop can't solve these problems for you without adding a lot of incidental complexity for and myself. However JavaScript private scope, lookup tables, and Underscore's excellent <code>_.unqiueId</code> can work wonders ;)
 
