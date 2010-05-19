@@ -9,7 +9,7 @@
   _.mixin({
     // check if an object is using a module
     includes: function(x, module) {
-      return _(x.modules).indexOf(module) != -1;
+      return _(x.includes).indexOf(module) != -1;
     },
 
     // check if an object is a Module
@@ -75,13 +75,7 @@
           _sel[k] = function() {
             var args = arguments;
             return function(x) {
-              var result;
-              try {
-                result = x[k].apply(x, args);                
-              } catch (err) {
-                throw Error([x.name, "does not implement", k, "or signature does not match"].join(" "));
-              }
-              return result;
+              return x[k].apply(x, args);
             };
           };
         }
