@@ -1,4 +1,4 @@
-h1. Introduction to datatype.js
+h1. Introduction to Underoop.js
 
 h2. Defining new types
 
@@ -19,10 +19,10 @@ MyClass.prototype.woz = function() {
 }
 </pre>
 
-Using datatype.js you can instead write the following:
+Using Underoop.js you can instead write the following:
 
 <pre>
-var MyClass = _.Type({
+var MyClass = _.Class({
     initialize: function() {
        this.foo = "foo";
        this.bar = "bar";
@@ -36,12 +36,12 @@ var MyClass = _.Type({
 });
 </pre>
 
-h2. Protocols
+h2. Modules
 
 Often you'll have a chunk of functionality that does not belong to a particular class. You can define a set of methods like so:
 
 <pre>
-var Events = _.Protocol({
+var Events = _.Module({
     addEvent: function(type, fn) { ... },
     removeEvent: function(type, fn) { ... },
     removeEvents: function(type) { ... },
@@ -52,20 +52,22 @@ var Events = _.Protocol({
 And "mixin" in this functionality easily:
 
 <pre>
-var Foo = _.Type({
-    protocols: [Events],
+var Foo = _.Module({
+    includes: [Events],
     intialize: function () {
         ...      
     } 
 });
 </pre>
 
+This is similar to how Ruby deals with this.
+
 h2. Messaging
 
 Being able to package up a message is pretty useful, especially at cutting down the amount of typing that you have to do. All methods of a Type are added to <code>_sel</code> so you use them with Underscore's excellent interfaces to the JavaScript collections.
 
 <pre>
-var Foo = _.Type({
+var Foo = _.Class({
   initialize: function(z) {
     this.z = z;
   },
@@ -73,7 +75,7 @@ var Foo = _.Type({
     return [x, y].join("");
   }
 });
-var Bar = _.Type({
+var Bar = _.Class({
   initialize: function(z) {
     this.z = z;
   },
@@ -87,3 +89,6 @@ var b = new Bar(6);
 
 _([a, b]).map(_sel.add(4, 5));
 </pre>
+
+h2. Inheritance
+

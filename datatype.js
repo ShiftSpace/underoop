@@ -8,7 +8,7 @@
   
   _.mixin({
     // check if an object is using a module
-    includes: function(x, modules) {
+    includes: function(x, module) {
       return _(x.modules).indexOf(module) != -1;
     },
 
@@ -17,7 +17,8 @@
       return x instanceof Module;
     },
 
-    // create grouping of functions for mixins
+    // create grouping of functions. Can be used with classes
+    // to combine functionality.
     Module: function(obj) {
       obj.prototype = new Module;
       obj.toString = function() {
@@ -36,11 +37,11 @@
       return x._class = _class;
     },
 
-    // creates a class. does not support inheritance for good reason
-    // use Modules. Selectors will be generated for any methods defined
-    // in your class
+    // creates a class. does not support inheritance because inheritance
+    // and AJAX do not work well together. Use Modules instead.
     Class: function(obj) {
       obj = obj || {};
+        
       var klass = function() {
         if(_.isFunction(this.initialize)) {
           return this.initialize.apply(this, arguments);
@@ -48,6 +49,7 @@
           return this;
         }
       };
+        
       var modules = obj.includes || [],
           name = obj.name = (obj.name || _.uniqueId("UnnamedClass")),
           methodMap = modules.map(function(x) {
@@ -61,6 +63,7 @@
           return ["<Class: ", name, ">"].join("");
         }
       });
+
       klass.name = name;
       klass.prototype = new Class();
       klass.prototype.type = klass;
