@@ -4,7 +4,7 @@ Underoop.js is a Underscore.js mixin that adds some handy functions for OOP styl
 
 h2. Defining new Classes
 
-Often you want OOP lass-like things but writing your objects in the following manner is kind of tedious:
+Often you want OOP class-like things but writing your objects in the following manner is kind of tedious:
 
 <pre>
 var MyClass = function() {
@@ -66,7 +66,7 @@ This is similar to how Ruby deals with this.
 
 h2. Messaging
 
-Being able to package up a message is pretty useful, especially at cutting down the amount of typing that you have to do. All methods of a Type are added to <code>_sel</code> so you use them with Underscore's excellent interfaces to the JavaScript collections.
+Being able to package up a message is pretty useful, especially at cutting down the amount of typing that you have to do. All methods of a Class are added to <code>_sel</code> so you use them with Underscore's excellent interfaces to the JavaScript collections.
 
 <pre>
 var Foo = _.Class({
