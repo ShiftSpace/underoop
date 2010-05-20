@@ -47,7 +47,7 @@ var Events = _.Module({
     addEvent: function(type, fn) { ... },
     removeEvent: function(type, fn) { ... },
     removeEvents: function(type) { ... },
-    fireEvent: function(type) { ... }
+    fireEvent: function(type, data) { ... }
 });
 </pre>
 
