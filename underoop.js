@@ -7,34 +7,28 @@
   function Module() {};
   
   _.mixin({
-    // check if an object is using a module
-    includes: function(x, module) {
-      return _(x.includes).indexOf(module) != -1;
-    },
-
-    // check if an object is a Module
-    isModule: function() {
-      return x instanceof Module;
-    },
-
     // create grouping of functions. Can be used with classes
     // to combine functionality.
     Module: function(obj) {
-      obj.prototype = new Module;
-      obj.toString = function() {
+      var m = new Module;
+      m._module = true;
+      _(obj).each(function(v, k) {
+        m[k] = v;
+      });
+      m.toString = function() {
         return ["<Module: ", (obj.name || _uniqueId("UnnamedModule")), ">"].join("");
       };
-      return obj;
+      return m;
     },
 
-    // check if an instance derives from class
-    isMember: function(x, _class) {
-      return x instanceof _class;
+    // check if an object is a Module
+    isModule: function(x) {
+      return x._module === true;
     },
 
-    // check if the instance has the same class
-    isInstance: function(x, _class) {
-      return x._class = _class;
+    // check if an object is using a module
+    includes: function(x, module) {
+      return _(module).isModule() && _(x.includes).indexOf(module) != -1;
     },
 
     // creates a class. does not support inheritance because inheritance
@@ -53,7 +47,7 @@
       var modules = obj.includes || [],
           name = obj.name = (obj.name || _.uniqueId("UnnamedClass")),
           methodMap = modules.map(function(x) {
-            x = _(x).clone(); delete x.name; delete x.toString; return x;
+            x = _(x).clone(); delete x.name; delete x.toString; delete x._module; return x;
           });
       obj =_.reduce(methodMap.concat(obj), {}, function(memo, m) {
         return _.extend(memo, m);
@@ -65,13 +59,13 @@
       });
 
       klass._name = name;
-      klass.prototype = new Class();
-      klass.prototype._class = klass;
-      klass.prototype._modules = klass._modules = modules;
+      klass._class = true;
+      klass._modules = klass._modules = modules;
+      klass.prototype = new Class;
 
       _(obj).each(function(v, k) {
         klass.prototype[k] = v;
-        if(_.isUndefined(_sel[k])) {
+        if(_.isFunction(v) && _.isUndefined(_sel[k])) {
           _sel[k] = function() {
             var args = arguments;
             return function(x) {
@@ -82,6 +76,10 @@
       });
 
       return klass;
+    },
+
+    isClass: function(x) {
+      return x._class === true;
     }
   });
 
