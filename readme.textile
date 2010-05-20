@@ -47,7 +47,7 @@ var Events = _.Module({
     addEvent: function(type, fn) { ... },
     removeEvent: function(type, fn) { ... },
     removeEvents: function(type) { ... },
-    fireEvent: function(type) { ... }
+    fireEvent: function(type, data) { ... }
 });
 </pre>
 
@@ -56,7 +56,7 @@ And "mixin" in this functionality easily:
 <pre>
 var Foo = _.Class({
     includes: [Events],
-    intialize: function () {
+    initialize: function () {
         ...      
     } 
 });
@@ -66,7 +66,7 @@ Rubyists will find this familiar.
 
 h2. Messaging
 
-Selectors are pretty useful, especially at cutting down the amount of typing. All methods of a Class are added as helper functins to an object <code>_sel</code> so you use them with Underscore's excellent interfaces to the JavaScript collections.
+Selectors are pretty useful, especially at cutting down the amount of typing. All methods of a Class are added as helper functins to an object <code>_sel</code> so you can use them with Underscore's excellent interfaces to the JavaScript collections.
 
 <pre>
 var Foo = _.Class({
@@ -102,3 +102,6 @@ h2. Caveats
 
 Name clashes are always a concern between Class method names, Class instance vars, Module method names, and Module instance vars. Underoop can't solve these problems without adding a lot of incidental complexity for you and myself. However JavaScript private scope, lookup tables, and Underscore's excellent <code>_.unqiueId</code> can work wonders for your particular usecase ;)
 
+h2. Props
+
+The design of this library is drawn heavily from MooTools. If you work in an environment where you can control all of the JS I heartily recommend it. Otherwise jQuery + Underscore + Underoop will have to do.
