@@ -46,7 +46,7 @@
         
       var modules = obj.includes || [],
           name = obj.name = (obj.name || _.uniqueId("UnnamedClass")),
-          methodMap = modules.map(function(x) {
+          methodMap = _(modules).map(function(x) {
             x = _(x).clone(); delete x.name; delete x.toString; delete x._module; return x;
           });
       obj =_.reduce(methodMap.concat(obj), {}, function(memo, m) {
