@@ -102,6 +102,17 @@ h2. Caveats
 
 Name clashes are always a concern between Class method names, Class instance vars, Module method names, and Module instance vars. Underoop can't solve these problems without adding a lot of incidental complexity for you and myself. However JavaScript private scope, lookup tables, and Underscore's excellent <code>_.unqiueId</code> can work wonders for your particular usecase ;)
 
+h2. Provided Mixins
+
+Underoop.js comes with two convenient modules. Events allows setting up custom events between objects. The other, Options, allows you to to parse data attributes on elements to passed onto instance constructors. This makes it easy to have your script automatically instantiate widgets from markup.
+
+<pre>
+<div data-your-ns-prop-a="Asset"
+     data-your-ns-prop-b="<%=@community.asset_url%>"
+     data-your-ns-prop-c="<%=@community.taxonomy%>">
+</div>
+</pre>
+
 h2. Props
 
 The design of this library is drawn heavily from MooTools. If you work in an environment where you can control all of the JS I heartily recommend it. Otherwise jQuery + Underscore + Underoop will have to do.

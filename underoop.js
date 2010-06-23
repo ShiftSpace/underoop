@@ -35,21 +35,16 @@
     // and AJAX do not work well together. Use Modules instead.
     Class: function(obj) {
       obj = obj || {};
-        
-      var klass = function() {
-        if(_.isFunction(this.initialize)) {
-          return this.initialize.apply(this, arguments);
-        } else {
-          return this;
-        }
-      };
-        
+
+      // set the name, or default to unique UnnamedClass
+      // created an array of any included modules
       var modules = obj.includes || [],
           name = obj.name = (obj.name || _.uniqueId("UnnamedClass")),
-          methodMap = _(modules).map(function(x) {
+          methodMaps = _(modules).map(function(x) {
             x = _(x).clone(); delete x.name; delete x.toString; delete x._module; return x;
           });
-      obj =_.reduce(methodMap.concat(obj), {}, function(memo, m) {
+
+      obj = _.reduce(methodMaps.concat(obj), {}, function(memo, m) {
         return _.extend(memo, m);
       });
       obj = _(obj).extend({
@@ -57,6 +52,15 @@
           return ["<Class: ", name, ">"].join("");
         }
       });
+
+      var klass = function() {
+        if(_.isFunction(this.initialize)) {
+          return this.initialize.apply(this, arguments);
+        } else {
+          if(console && console.warn) console.warn(name + " does not define an initialize method");
+          return this;
+        }
+      };
 
       klass._name = name;
       klass._class = true;
@@ -74,7 +78,7 @@
           };
         }
       });
-
+      
       return klass;
     },
 
