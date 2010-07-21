@@ -6,7 +6,7 @@ root.URL = _.Class({
     this.host = options.host;
     this.port = options.port || "";
     this.path = options.path || "";
-    this.params = options.params || {};
+    this.params = options.params || null;
     this.hash = options.hash || "";
   },
   set: function(p, v) {
@@ -14,6 +14,7 @@ root.URL = _.Class({
     return this;
   },
   queryString: function() {
+    if(_(this.params).keys().length == 0) return "";
     return _(this.params).map(function(v, k) {
       return k + "=" + v;
     }).join("&");
@@ -48,8 +49,12 @@ function parseParams(paramString) {
   return _.reduce(xs, {}, function(memo, x) {
     var temp = {},
         kv = x.split("=");
-    temp[kv[0]] = kv[1];
-    return _(memo).extend(temp);
+    if(kv[0]) {
+      temp[kv[0]] = kv[1];
+      return _(memo).extend(temp);
+    } else {
+      return memo;
+    }
   });
 };
 
