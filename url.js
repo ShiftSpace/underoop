@@ -1,6 +1,6 @@
-jQuery(document.body).ready(init);
-
-var URL = _.Class({
+(function() {
+var root = this;
+root.URL = _.Class({
   initialize: function(options) {
     this.protocol = options.protocol || "http";
     this.host = options.host;
@@ -34,8 +34,6 @@ var URL = _.Class({
   }
 });
 
-(function() {
-
 function parseParams(paramString) {
   var xs = paramString.replace(/^\?/,'').split('&');
   return _.reduce(xs, {}, function(memo, x) {
@@ -47,7 +45,7 @@ function parseParams(paramString) {
 };
 
 // adapted from http://snipplr.com/view/12659/parseurl/  
-URL.parse = function(urlString) {
+root.URL.parse = function(urlString) {
   var temp = jQuery("<a/>")[0];
   temp.href = urlString;
   console.log(temp);
@@ -59,9 +57,4 @@ URL.parse = function(urlString) {
     params: parseParams(temp.search)
   });
 };
-  
 })();
-
-function init() {
-  
-}
