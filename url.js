@@ -7,6 +7,7 @@ root.URL = _.Class({
     this.port = options.port || "";
     this.path = options.path || "";
     this.params = options.params || {};
+    this.hash = options.hash || "";
   },
   queryString: function() {
     return _(this.params).map(function(v, k) {
@@ -25,12 +26,14 @@ root.URL = _.Class({
     if(!this.host) throw new Error("No host specified");
     var portStr = (!this.port) ? "" : ":" + this.port,
         qs = this.queryString(),
-        queryStr = qs ? "?" + qs : "";
+        queryStr = qs ? "?" + qs : "",
+        hashStr = this.hash ? this.hash : "";
     return [this.protocol || "http", "://",
             this.host,
             portStr,
             this.path,
-            queryStr].join("");
+            queryStr,
+            hashStr].join("");
   }
 });
 
@@ -54,7 +57,8 @@ root.URL.parse = function(urlString) {
     host: temp.hostname,
     port: temp.port,
     path: temp.pathname.replace(/^([^\/])/,'/$1'),
-    params: parseParams(temp.search)
+    params: parseParams(temp.search),
+    hash: temp.hash.replace('#','')
   });
 };
 })();
