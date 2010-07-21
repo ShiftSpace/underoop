@@ -51,7 +51,6 @@ function parseParams(paramString) {
 root.URL.parse = function(urlString) {
   var temp = jQuery("<a/>")[0];
   temp.href = urlString;
-  console.log(temp);
   return new URL({
     protocol: temp.protocol.replace(":", ""),
     host: temp.hostname,
