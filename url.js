@@ -9,6 +9,10 @@ root.URL = _.Class({
     this.params = options.params || {};
     this.hash = options.hash || "";
   },
+  set: function(p, v) {
+    this[p] = v;
+    return this;
+  },
   queryString: function() {
     return _(this.params).map(function(v, k) {
       return k + "=" + v;
@@ -16,11 +20,13 @@ root.URL = _.Class({
   },
   addComponent: function(component) {
     this.path = [this.path, component].join("/");
+    return this;
   },
   addParam: function(k, v) {
     var temp = {};
     temp[k] = v;
     _(this.params).extend(temp);
+    return this;
   },
   toUrlString: function() {
     if(!this.host) throw new Error("No host specified");
