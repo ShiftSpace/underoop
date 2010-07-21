@@ -33,7 +33,7 @@ root.URL = _.Class({
     var portStr = (!this.port) ? "" : ":" + this.port,
         qs = this.queryString(),
         queryStr = qs ? "?" + qs : "",
-        hashStr = this.hash ? this.hash : "";
+        hashStr = this.hash ? "#" + this.hash : "";
     return [this.protocol || "http", "://",
             this.host,
             portStr,
