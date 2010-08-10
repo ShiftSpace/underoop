@@ -39,14 +39,26 @@
       // set the name, or default to unique UnnamedClass
       // created an array of any included modules
       var modules = obj.includes || [],
-          name = obj.name = (obj.name || _.uniqueId("UnnamedClass")),
-          methodMaps = _(modules).map(function(x) {
-            x = _(x).clone(); delete x.name; delete x.toString; delete x._module; return x;
-          });
+          name = obj.name = (obj.name || _.uniqueId("UnnamedClass"));
 
-      obj = _.reduce(methodMaps.concat(obj), {}, function(memo, m) {
-        return _.extend(memo, m);
-      });
+      var methodMaps = [];
+      for(var i = 0; i < modules.length; i++) {
+        var x = modules[i];
+        x = _(x).clone();
+        delete x.name;
+        delete x.toString;
+        delete x._module;
+        methodMaps.push(x);
+      }
+
+      var memo = {};
+      methodMaps.push(obj);
+      for(var i = 0; i < methodMaps.length; i++) {
+        var m = methodMaps[i];
+        memo = _.extend(memo, m);
+      }
+      obj = memo;
+      
       obj = _(obj).extend({
         toString: function() {
           return ["<Class: ", name, ">"].join("");
