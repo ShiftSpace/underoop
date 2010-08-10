@@ -64,7 +64,7 @@
 
       klass._name = name;
       klass._class = true;
-      klass._modules = klass._modules = modules;
+      klass._modules = modules;
       klass.prototype = new Class;
 
       _(obj).each(function(v, k) {
