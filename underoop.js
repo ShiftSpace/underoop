@@ -44,9 +44,9 @@
             x = _(x).clone(); delete x.name; delete x.toString; delete x._module; return x;
           });
 
-      obj = _.reduce(methodMaps.concat(obj), {}, function(memo, m) {
+      obj = _.reduce(methodMaps.concat(obj), function(memo, m) {
         return _.extend(memo, m);
-      });
+      }, {});
       obj = _(obj).extend({
         toString: function() {
           return ["<Class: ", name, ">"].join("");
@@ -55,7 +55,14 @@
 
       var klass = function() {
         if(_.isFunction(this.initialize)) {
-          return this.initialize.apply(this, arguments);
+          if(_.isFunction(this.initializeBefore)) {
+            this.initializeBefore();
+          }
+          this.initialize.apply(this, arguments);
+          if(_.isFunction(this.initializeAfter)) {
+            this.initializeAfter();
+          }
+          return this;
         } else {
           if(console && console.warn) console.warn(name + " does not define an initialize method");
           return this;
