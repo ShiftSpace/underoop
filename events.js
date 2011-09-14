@@ -11,9 +11,9 @@
     },
     
     fireEvent: function(type, x) {
-      var events = this._events[type];
-      if(events) {
-        _(events).each(function(fn) {
+      var events = this._events;
+      if(events && events[type]) {
+        _(events[type]).each(function(fn) {
           fn(x);
         });
       }
